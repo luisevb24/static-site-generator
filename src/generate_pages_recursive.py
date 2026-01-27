@@ -1,7 +1,7 @@
 import os
 from generate_page import generate_page
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     contents = os.listdir(dir_path_content)
 
     for item in contents:
@@ -11,7 +11,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         if os.path.isfile(full_path) and item.lower().endswith(".md"):
             # cambiar .md -> .html
             dest_path = os.path.splitext(dest_path)[0] + ".html"
-            generate_page(full_path, template_path, dest_path)
+            generate_page(full_path, template_path, dest_path, basepath)
 
         elif os.path.isdir(full_path):
-            generate_pages_recursive(full_path, template_path, dest_path)
+            generate_pages_recursive(full_path, template_path, dest_path, basepath)

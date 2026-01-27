@@ -2,9 +2,10 @@ import os
 from markdown_to_html_node import markdown_to_html_node
 from extract_title import extract_title
 
-def generate_page(from_path, template_path, dest_path):
-    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
+
+def generate_page(from_path, template_path, dest_path, basepath):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Normaliza paths a absolutos (relativos al archivo actual)
@@ -27,6 +28,8 @@ def generate_page(from_path, template_path, dest_path):
     # Inyecta en template (reasignando)
     template_content = template_content.replace("{{ Title }}", html_title)
     template_content = template_content.replace("{{ Content }}", html_string)
+    template_content = template_content.replace('href="/', f'href="{basepath}')
+    template_content = template_content.replace('src="/', f'src="{basepath}')
 
     # Crea el directorio destino (padre)
     dest_dir = os.path.dirname(dest_abs)
